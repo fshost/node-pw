@@ -3,6 +3,8 @@ pw
 
 Password prompts for node.
 
+[![build status](https://secure.travis-ci.org/substack/node-pw.png)](http://travis-ci.org/substack/node-pw)
+
 example
 =======
 
