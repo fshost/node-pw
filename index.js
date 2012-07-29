@@ -35,16 +35,24 @@ module.exports = function () {
     
     var sep = opts.seperator;
     var cb = opts.cb;
+
+    function setRawMode(input, state) {
+        if (input.setRawMode) {
+            input.setRawMode(state);
+        } else {
+            tty.setRawMode(state);
+        }
+    }
     
     if (stream.in === process.stdin) {
-        tty.setRawMode(true);
+        setRawMode(stream.in, true);
     }
     
     var line = '';
     stream.in.on('data', function ondata (buf) {
         function finish () {
             if (stream.in === process.stdin) {
-                tty.setRawMode(false);
+                setRawMode(stream.in, false);
             }
             if (stream.in.pause) stream.in.pause();
             stream.in.removeListener('data', ondata);
