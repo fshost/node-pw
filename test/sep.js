@@ -20,8 +20,11 @@ test('seperator', function (t) {
     pw('_', stream.in, stream.out, function (pass) {
         t.equal(pass, 'beep');
         t.equal(data, '____\r\n');
-        t.end();
     });
     
     stream.in.emit('data', new Buffer('beep\r\n'));
+    
+    t.on('end', function () {
+        process.stdin.destroy();
+    });
 });

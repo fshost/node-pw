@@ -20,8 +20,11 @@ test('prompt', function (t) {
     pw(stream.in, stream.out, function (pass) {
         t.equal(pass, 'beep');
         t.equal(data, '****\r\n');
-        t.end();
     });
     
     stream.in.emit('data', new Buffer('beep\r\n'));
+    
+    t.on('end', function () {
+        process.stdin.destroy();
+    });
 });
