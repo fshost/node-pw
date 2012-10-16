@@ -2,7 +2,7 @@ var tty = require('tty');
 
 module.exports = function () {
     var opts = {
-        seperator : '*',
+        separator : '*',
         in : process.stdin,
         out : process.stdout,
         cb : function () {}
@@ -12,7 +12,7 @@ module.exports = function () {
         var arg = arguments[i];
         switch (typeof arg) {
             case 'string' :
-                opts.seperator = arg;
+                opts.separator = arg;
                 break;
             case 'function' :
                 opts.cb = arg;
@@ -33,7 +33,7 @@ module.exports = function () {
         out : opts.out
     };
     
-    var sep = opts.seperator;
+    var sep = opts.separator;
     var cb = opts.cb;
 
     function setRawMode(input, state) {
@@ -84,6 +84,9 @@ module.exports = function () {
                 if (stream.out) stream.out.write('\r\n');
                 cb(line);
                 break;
+            }
+			else if (c === '\b') {
+                line = line.substr(0, line.length - 1);
             }
             else {
                 if (stream.out) stream.out.write(sep);
